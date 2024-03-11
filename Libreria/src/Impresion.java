@@ -62,6 +62,13 @@ public class Impresion {
             generos.add(genero);
         }
     }
+    public boolean contieneGenero(String genero){
+        if(generos.contains(genero)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /*Redefino el equals para aplicar el contain */
     @Override
     public boolean equals(Object obj){

@@ -6,8 +6,11 @@ public abstract class Cliente {
     private int dni;
     private String direccion;
     private ArrayList<String>autoresFavoritos;
-    private ArrayList<String>generosFavoritos;
+    protected ArrayList<String>generosFavoritos;
     private ArrayList<Impresion> listadoCompras;
+    private int descuento;
+    
+
     
     public Cliente(String nombre, String apellido, int dni, String direccion) {
         this.nombre = nombre;
@@ -17,6 +20,15 @@ public abstract class Cliente {
         autoresFavoritos = new ArrayList<>();
         generosFavoritos = new ArrayList<>();
         listadoCompras = new ArrayList<>();
+    }
+
+    public Cliente(String nombre, String apellido, int dni, String direccion,int descuento) {
+        this(nombre, apellido, dni, direccion);
+        this.descuento = descuento;
+    }
+
+    public void setDescuento(int descuento) {
+        this.descuento = descuento;
     }
 
     public String getNombre() {
@@ -63,11 +75,33 @@ public abstract class Cliente {
         }
     }
 
+    public boolean tieneAutorFavorito(String autor){
+        if(autoresFavoritos.contains(autor)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean tieneGenero(String genero){
+        if(generosFavoritos.contains(genero)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public int cantidadGeneros(){
+        return generosFavoritos.size();
+    }
+
     public void nuevaCompra(Impresion nueva){
         listadoCompras.add(nueva);
     }
     
-    public abstract int getDescuento();
+    public int getDescuento(){
+        return descuento;
+    }
 
     public boolean compro(Impresion producto){
         if(listadoCompras.contains(producto)){
@@ -75,5 +109,8 @@ public abstract class Cliente {
         }else{
             return false;
         }
+    }
+    public boolean gustaProducto(Impresion producto){
+        return tieneAutorFavorito(producto.getAutor());
     }
 }
