@@ -62,5 +62,18 @@ public class Impresion {
             generos.add(genero);
         }
     }
-
+    /*Redefino el equals para aplicar el contain */
+    @Override
+    public boolean equals(Object obj){
+        try {
+            Impresion aux = (Impresion) obj;
+            if(aux.getNombre().equals(this.getNombre())&&aux.getAutor().equals(this.getAutor())&&aux.getResumen().equals(this.getResumen())){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

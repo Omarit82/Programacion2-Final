@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Cliente {
+public abstract class Cliente {
     private String nombre;
     private String apellido;
     private int dni;
@@ -67,4 +67,13 @@ public class Cliente {
         listadoCompras.add(nueva);
     }
     
+    public abstract int getDescuento();
+
+    public boolean compro(Impresion producto){
+        if(listadoCompras.contains(producto)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
