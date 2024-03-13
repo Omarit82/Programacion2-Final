@@ -1,14 +1,18 @@
+package Piezas;
 import java.util.ArrayList;
+
+import Criterios.Busqueda;
 /*Cada pieza compuesta posee un nombre y una descripción */
 public class PiezaCompuesta extends Pieza{
 
-    private ArrayList<Pieza> piezas;
-    public static final int MATERIAL_AGREGADO = 1;
+    protected ArrayList<Pieza> piezas;
+    private int materialAgregado;
     public static final int TIEMPO_EXTRA = 45;
     
-    public PiezaCompuesta(String nombre, String descripcion) {
+    public PiezaCompuesta(String nombre, String descripcion,int materialAgregado) {
         super(nombre, descripcion);
         piezas = new ArrayList<>();
+        this.materialAgregado = materialAgregado;
     }
     public void agregarPieza(Pieza nuevaPieza){
         piezas.add(nuevaPieza);
@@ -19,9 +23,9 @@ public class PiezaCompuesta extends Pieza{
         1 gramo por cada pieza simple que la compone, */
         double total = 0;
         for (Pieza pieza : piezas) {
-            total += pieza.getPlaNecesario()+MATERIAL_AGREGADO;
+            total += pieza.getPlaNecesario();
         }
-        return total;
+        return total + (materialAgregado*this.cantidadPiezasSimples());
     }
 
     @Override
@@ -35,25 +39,33 @@ public class PiezaCompuesta extends Pieza{
     }
 
     
-    public ArrayList<String> getColor() {
+    public ArrayList<String> getColores() {
         /* La pieza compuesta no posee un color propio, pero debe ser posible obtener la lista de los 
         colores de las piezas que lo componen (simples o compuestas), sin repetidos. */
         ArrayList<String> resultado = new ArrayList<>();
         for (Pieza pieza : piezas) {
-            for (int i=0; i< pieza.getColor().size(); i++) {
-                if(!resultado.contains(pieza.getColor().get(i))){
-                    resultado.add(pieza.getColor().get(i));
+            for (int i=0; i< pieza.getColores().size(); i++) {
+                if(!resultado.contains(pieza.getColores().get(i))){
+                    resultado.add(pieza.getColores().get(i));
                 }
             }
         }
         return resultado;
     }
     
-    public int cantidadPiezas(){
+    public int cantidadPiezasSimples(){
         int cantidadPiezasTotales = 0;
         for (Pieza pieza : piezas) {
-            cantidadPiezasTotales += pieza.cantidadPiezas();
+            cantidadPiezasTotales += pieza.cantidadPiezasSimples();
         }
         return cantidadPiezasTotales;
+    }
+    @Override
+    public ArrayList<Pieza> buscar(Busqueda criterio) {
+        ArrayList<Pieza> retorno = new ArrayList<>();
+        for (Pieza pieza : piezas) {
+            retorno.addAll(pieza.buscar(criterio));
+        }
+        return retorno;
     }
 }

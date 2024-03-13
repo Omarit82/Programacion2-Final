@@ -1,4 +1,7 @@
+package Piezas;
 import java.util.ArrayList;
+
+import Criterios.Busqueda;
 
 public class PiezaSimple extends Pieza {
     
@@ -21,10 +24,14 @@ public class PiezaSimple extends Pieza {
         this.plaNecesario = plaNecesario;
     }
 
-    public ArrayList<String> getColor() {
+    public ArrayList<String> getColores() {
         ArrayList<String> resultado = new ArrayList<>();
         resultado.add(color);
         return resultado;
+    }
+
+    public String getColor(){
+        return color;
     }
 
     public void setColor(String color) {
@@ -39,7 +46,16 @@ public class PiezaSimple extends Pieza {
         this.tiempoEstimado = tiempoEstimado;
     }
     @Override
-    public int cantidadPiezas(){
+    public int cantidadPiezasSimples(){
         return 1;
+    }
+
+    @Override
+    public ArrayList<Pieza> buscar(Busqueda criterio) {
+        ArrayList<Pieza>retorno = new ArrayList<>();
+        if(criterio.cumple(this)){
+            retorno.add(this);
+        }
+        return retorno;
     }
 }
